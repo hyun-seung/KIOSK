@@ -1,4 +1,4 @@
-package com.sendbox.kiosk.domain;
+package com.sendbox.kiosk.menu.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -33,5 +33,12 @@ public class Menu {
         this.price = price;
         this.status = status;
         this.salePercent = salePercent;
+    }
+
+    public Menu(MenuDto menuDto) {
+        this.name = menuDto.getName();
+        this.price = menuDto.getPrice();
+        this.status = menuDto.isStatus();
+        this.salePercent = menuDto.getSalePercent();
     }
 }

@@ -1,10 +1,9 @@
 package com.sendbox.kiosk.service;
 
-import com.sendbox.kiosk.domain.Menu;
-import com.sendbox.kiosk.repository.MenuRepository;
-import org.aspectj.lang.annotation.After;
-import org.hibernate.query.sqm.mutation.internal.cte.CteInsertStrategy;
-import org.junit.jupiter.api.AfterAll;
+import com.sendbox.kiosk.menu.domain.Menu;
+import com.sendbox.kiosk.menu.domain.MenuDto;
+import com.sendbox.kiosk.menu.repository.MenuRepository;
+import com.sendbox.kiosk.menu.service.MenuService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ class MenuServiceTest {
     public void addMenuTest() {
         //given
         String menuName = "Americano";
-        Menu menu1 = Menu.builder()
+        MenuDto menu1 = MenuDto.builder()
                 .name(menuName)
                 .price(1500)
                 .status(true)
