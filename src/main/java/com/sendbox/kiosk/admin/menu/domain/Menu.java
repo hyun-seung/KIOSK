@@ -1,4 +1,4 @@
-package com.sendbox.kiosk.menu.domain;
+package com.sendbox.kiosk.admin.menu.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

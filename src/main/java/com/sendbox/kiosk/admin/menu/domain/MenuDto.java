@@ -1,4 +1,4 @@
-package com.sendbox.kiosk.menu.domain;
+package com.sendbox.kiosk.admin.menu.domain;
 
 import lombok.Builder;
 import lombok.Getter;
