@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Getter
 @Entity(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,16 +26,22 @@ public class User {
     @Column(nullable = false)
     private int totalPoint;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
     @Builder
-    public User(String name, String phoneNumber) {
+    public User(String name, String phoneNumber, Set<Role> roles) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.totalPoint = 0;
+        this.roles = roles;
     }
 
     public User(UserDto userDto) {
         this.name = userDto.getName();
         this.phoneNumber = userDto.getPhoneNumber();
         this.totalPoint = 0;
+        this.roles = userDto.getRoles();
     }
 }
