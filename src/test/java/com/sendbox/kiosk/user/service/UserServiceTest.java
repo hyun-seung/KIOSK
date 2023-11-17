@@ -49,7 +49,7 @@ class UserServiceTest {
         assertEquals(0, user.getTotalPoint());
     }
 
-    @DisplayName("이미 존재하는 핸드폰 번호가 존재할 때는 생성에 실패한다.")
+    @DisplayName("이미 존재하는 핸드폰 번호가 존재할 때는 생성에 실패하여 NULL을 반환한다.")
     @Test
     public void Test() {
         //given
