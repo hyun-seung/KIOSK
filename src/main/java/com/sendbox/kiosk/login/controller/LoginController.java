@@ -1,10 +1,10 @@
-package com.sendbox.kiosk.user.controller;
+package com.sendbox.kiosk.login.controller;
 
-import com.sendbox.kiosk.user.domain.LoginRequestDto;
-import com.sendbox.kiosk.user.domain.TokenDto;
-import com.sendbox.kiosk.user.domain.UserDto;
-import com.sendbox.kiosk.user.service.LoginService;
-import com.sendbox.kiosk.user.service.UserService;
+import com.sendbox.kiosk.login.domain.LoginRequestDto;
+import com.sendbox.kiosk.member.domain.TokenDto;
+import com.sendbox.kiosk.member.user.domain.UserDto;
+import com.sendbox.kiosk.login.service.LoginService;
+import com.sendbox.kiosk.member.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

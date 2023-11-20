@@ -1,8 +1,8 @@
 package com.sendbox.kiosk.security.jwt;
 
-import com.sendbox.kiosk.user.domain.Role;
-import com.sendbox.kiosk.user.domain.User;
-import com.sendbox.kiosk.user.repository.UserRepository;
+import com.sendbox.kiosk.common.Role;
+import com.sendbox.kiosk.member.user.domain.User;
+import com.sendbox.kiosk.member.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

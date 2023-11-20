@@ -1,8 +1,9 @@
-package com.sendbox.kiosk.user.service;
+package com.sendbox.kiosk.member.service;
 
-import com.sendbox.kiosk.user.domain.User;
-import com.sendbox.kiosk.user.domain.UserDto;
-import com.sendbox.kiosk.user.repository.UserRepository;
+import com.sendbox.kiosk.member.user.domain.User;
+import com.sendbox.kiosk.member.user.domain.UserDto;
+import com.sendbox.kiosk.member.user.repository.UserRepository;
+import com.sendbox.kiosk.member.user.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

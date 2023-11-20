@@ -1,9 +1,9 @@
-package com.sendbox.kiosk.user.service;
+package com.sendbox.kiosk.member.user.service;
 
-import com.sendbox.kiosk.user.domain.Role;
-import com.sendbox.kiosk.user.domain.User;
-import com.sendbox.kiosk.user.domain.UserDto;
-import com.sendbox.kiosk.user.repository.UserRepository;
+import com.sendbox.kiosk.common.Role;
+import com.sendbox.kiosk.member.user.domain.User;
+import com.sendbox.kiosk.member.user.domain.UserDto;
+import com.sendbox.kiosk.member.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

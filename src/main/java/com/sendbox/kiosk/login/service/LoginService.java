@@ -1,8 +1,8 @@
-package com.sendbox.kiosk.user.service;
+package com.sendbox.kiosk.login.service;
 
+import com.sendbox.kiosk.login.domain.LoginRequestDto;
 import com.sendbox.kiosk.security.jwt.JwtTokenProvider;
-import com.sendbox.kiosk.user.domain.LoginRequestDto;
-import com.sendbox.kiosk.user.domain.TokenDto;
+import com.sendbox.kiosk.member.domain.TokenDto;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

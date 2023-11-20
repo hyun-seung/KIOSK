@@ -1,5 +1,6 @@
-package com.sendbox.kiosk.user.domain;
+package com.sendbox.kiosk.member.user.domain;
 
+import com.sendbox.kiosk.common.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

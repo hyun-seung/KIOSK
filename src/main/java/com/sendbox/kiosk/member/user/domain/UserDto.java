@@ -1,9 +1,9 @@
-package com.sendbox.kiosk.user.domain;
+package com.sendbox.kiosk.member.user.domain;
 
+import com.sendbox.kiosk.common.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 

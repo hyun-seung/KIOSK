@@ -2,7 +2,6 @@ package com.sendbox.kiosk.security.config;
 
 import com.sendbox.kiosk.security.jwt.JwtTokenProvider;
 import com.sendbox.kiosk.security.jwt.config.JwtSecurityConfig;
-import com.sendbox.kiosk.user.domain.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

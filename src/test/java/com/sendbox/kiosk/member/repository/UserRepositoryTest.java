@@ -1,6 +1,7 @@
-package com.sendbox.kiosk.user.repository;
+package com.sendbox.kiosk.member.repository;
 
-import com.sendbox.kiosk.user.domain.User;
+import com.sendbox.kiosk.member.user.domain.User;
+import com.sendbox.kiosk.member.user.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

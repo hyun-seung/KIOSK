@@ -1,6 +1,6 @@
-package com.sendbox.kiosk.user.repository;
+package com.sendbox.kiosk.member.user.repository;
 
-import com.sendbox.kiosk.user.domain.User;
+import com.sendbox.kiosk.member.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
