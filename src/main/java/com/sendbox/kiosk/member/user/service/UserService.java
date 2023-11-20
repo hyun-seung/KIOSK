@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -20,7 +22,8 @@ public class UserService {
     private UserRepository userRepository;
 
     public User createUser(UserDto userDto) {
-        userDto.setRole(Role.ROLE_USER);
+        userDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+
         List<User> users = userRepository.findByPhoneNumber(userDto.getPhoneNumber());
 
         if (users.size() != 0) {
@@ -34,7 +37,8 @@ public class UserService {
     }
 
     public User createAdmin(UserDto userDto) {
-        userDto.setRole(Role.ROLE_ADMIN);
+        userDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+
         List<User> users = userRepository.findByPhoneNumber(userDto.getPhoneNumber());
 
         if (users.size() != 0) {
