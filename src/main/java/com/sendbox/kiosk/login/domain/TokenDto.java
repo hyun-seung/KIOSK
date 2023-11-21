@@ -1,4 +1,4 @@
-package com.sendbox.kiosk.member.domain;
+package com.sendbox.kiosk.login.domain;
 
 import lombok.Builder;
 import lombok.Getter;

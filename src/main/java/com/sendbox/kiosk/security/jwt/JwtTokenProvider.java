@@ -63,8 +63,6 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpiration);
 
-        //redis에 저장
-
         return Jwts.builder()
                 .claims(claims)
                 .issuedAt(now)
