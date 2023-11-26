@@ -2,10 +2,12 @@ package com.sendbox.kiosk.login.service;
 
 import com.sendbox.kiosk.login.domain.LoginRequestDto;
 import com.sendbox.kiosk.login.domain.Token;
-import com.sendbox.kiosk.login.repository.TokenRedisRepository;
-import com.sendbox.kiosk.security.jwt.JwtTokenProvider;
 import com.sendbox.kiosk.login.domain.TokenDto;
+import com.sendbox.kiosk.redis.domain.UserToken;
+import com.sendbox.kiosk.redis.repository.UserTokenRepository;
+import com.sendbox.kiosk.security.jwt.JwtTokenProvider;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,16 +19,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class LoginService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    private TokenRedisRepository tokenRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserTokenRepository tokenRepository;
 
 
     public TokenDto login(LoginRequestDto userLoginReqDto) {
@@ -34,27 +32,30 @@ public class LoginService {
         try {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            userLoginReqDto.getUserName(),
-                            userLoginReqDto.getTell()
+                            userLoginReqDto.getTell(),
+                            userLoginReqDto.getPassword()
                     )
             );
         } catch (BadCredentialsException e) {
-            log.error("로그인 실패 :: 전화번호가 달라용");
+            log.error("로그인 실패");
             return null;
         }
 
-        TokenDto tokenDto = new TokenDto(
-                jwtTokenProvider.createAccessToken(authentication),
-                jwtTokenProvider.createRefreshToken(authentication)
-        );
-
         Token token = Token.builder()
-                .tokenDto(tokenDto)
+                .accessToken(jwtTokenProvider.createAccessToken(authentication))
+                .refreshToken(jwtTokenProvider.createRefreshToken(authentication))
                 .build();
 
-        tokenRepository.save(token);
+        UserToken userToken = UserToken.builder()
+                .userTell(userLoginReqDto.getTell())
+                .token(token)
+                .build();
 
+        UserToken saveUserToken = tokenRepository.save(userToken);
 
-        return tokenDto;
+        return TokenDto.builder()
+                .accessToken(saveUserToken.getToken().getAccessToken())
+                .refreshToken(saveUserToken.getToken().getRefreshToken())
+                .build();
     }
 }

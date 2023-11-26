@@ -4,7 +4,6 @@ import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Date;
 
 @Slf4j
@@ -76,6 +74,7 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload().getSubject();
 
+        // 전화번호로 조회
         UserDetails userDetails = userDetailService.loadUserByUsername(userPrincipal);
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -96,7 +95,7 @@ public class JwtTokenProvider {
         } catch(ExpiredJwtException e) {
             log.error("토큰 만료");
         } catch(JwtException e) {
-            log.error("잘못된 토큰 1");
+            log.error("잘못된 토큰 - JwtTokenProvider");
         }
         return false;
     }

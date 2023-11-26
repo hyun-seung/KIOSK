@@ -12,13 +12,21 @@ import java.util.Set;
 public class UserDto {
 
     private String name;
-    private String phoneNumber;
+    private String tell;
+    private String password;
+    private Integer pin;
     private Set<Role> roles;
 
     @Builder
-    public UserDto(String name, String phoneNumber) {
+    public UserDto(String name, String tell, String password, Integer pin) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.tell = tell;
+        this.password = password;
+        this.pin = pin;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setRoles(Set<Role> roles) {

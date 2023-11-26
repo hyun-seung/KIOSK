@@ -22,7 +22,13 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private String phoneNumber;
+    private String tell;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private Integer pin;
 
     @Column(nullable = false)
     private int totalPoint;
@@ -32,16 +38,20 @@ public class User {
     private Set<Role> roles;
 
     @Builder
-    public User(String name, String phoneNumber, Set<Role> roles) {
+    public User(String name, String tell, String password, Integer pin, Set<Role> roles) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.tell = tell;
+        this.password = password;
+        this.pin = pin;
         this.totalPoint = 0;
         this.roles = roles;
     }
 
     public User(UserDto userDto) {
         this.name = userDto.getName();
-        this.phoneNumber = userDto.getPhoneNumber();
+        this.tell = userDto.getTell();
+        this.password = userDto.getPassword();
+        this.pin = userDto.getPin();
         this.totalPoint = 0;
         this.roles = userDto.getRoles();
     }

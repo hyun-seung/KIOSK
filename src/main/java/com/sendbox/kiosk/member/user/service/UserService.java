@@ -5,6 +5,7 @@ import com.sendbox.kiosk.member.user.domain.User;
 import com.sendbox.kiosk.member.user.domain.UserDto;
 import com.sendbox.kiosk.member.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,43 +16,27 @@ import java.util.List;
 
 @Slf4j
 @Transactional
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final EncodeService encodeService;
+    private final UserRepository userRepository;
 
     public User createUser(UserDto userDto) {
         userDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
-        List<User> users = userRepository.findByPhoneNumber(userDto.getPhoneNumber());
-
-        if (users.size() != 0) {
-            log.info("유저 : {}", users.size());
-            return null;
-        }
+        String encodedPassword = encodeService.encodingPassword(userDto.getPassword());
+        userDto.setPassword(encodedPassword);
 
         User newUser = new User(userDto);
-        log.info("저장");
         return userRepository.save(newUser);
     }
 
-    public User createAdmin(UserDto userDto) {
-        userDto.setRoles(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
-
-        List<User> users = userRepository.findByPhoneNumber(userDto.getPhoneNumber());
-
-        if (users.size() != 0) {
-            log.info("유저 : {}", users.size());
-            return null;
-        }
-
-        User newUser = new User(userDto);
-        log.info("저장");
-        return userRepository.save(newUser);
+    public boolean isNotExistedUser(String tell) {
+        List<User> users = userRepository.findByTell(tell);
+        return users.isEmpty();
     }
 
-    public User getUserIdByPhoneNumber(String phoneNumber) {
-        return null;
-    }
+
 }

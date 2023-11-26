@@ -1,4 +1,4 @@
-package com.sendbox.kiosk.redis;
+package com.sendbox.kiosk.redis.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;

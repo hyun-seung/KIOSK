@@ -26,16 +26,6 @@ public class LoginController {
         TokenDto resultToken = loginService.login(loginRequestDto);
         return ResponseEntity.ok(resultToken);
     }
-
-    @PostMapping("/signup/user")
-    public ResponseEntity<String> signupUser(@RequestBody UserDto userDto) {
-        userService.createUser(userDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/signup/admin")
-    public ResponseEntity<String> signupAdmin(@RequestBody UserDto userDto) {
-        userService.createAdmin(userDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
+
+

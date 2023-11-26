@@ -2,18 +2,15 @@ package com.sendbox.kiosk.login.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class TokenDto {
-
-    private String accessToekn;
+    private String accessToken;
     private String refreshToken;
 
     @Builder
-    public TokenDto(String accessToekn, String refreshToken) {
-        this.accessToekn = accessToekn;
+    public TokenDto(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 }

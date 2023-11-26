@@ -41,7 +41,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
                         .requestMatchers(new MvcRequestMatcher(introspector, "/admin/**")).hasRole("ADMIN")
-                        .requestMatchers(new MvcRequestMatcher(introspector,"/user/**")).hasRole("USER")
+                        .requestMatchers(new MvcRequestMatcher(introspector,"/mem/**")).hasRole("MEMBER")
                         .anyRequest().permitAll());
 
         httpSecurity.exceptionHandling(httpSecurityExceptionHandlingConfigurer ->

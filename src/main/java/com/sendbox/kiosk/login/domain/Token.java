@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
 @Getter
-@RedisHash(value="token")
 public class Token {
 
     @Id
@@ -22,8 +21,8 @@ public class Token {
     }
 
     @Builder
-    public Token(TokenDto tokenDto) {
-        this.accessToken = tokenDto.getAccessToekn();
-        this.refreshToken = tokenDto.getRefreshToken();
+    public Token(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 }

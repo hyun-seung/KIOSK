@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -25,26 +26,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userRepository.findById(Long.parseLong(userId))
-                .orElseThrow(() -> {
-                    log.error("잘못된 유저 번호입니다.");
-                    return null;
-                });
+    public UserDetails loadUserByUsername(String userTell) throws UsernameNotFoundException {
+        List<User> users = userRepository.findByTell(userTell);
 
-        log.info("loadByUsername");
-
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String password = bCryptPasswordEncoder.encode(user.getPhoneNumber());
+        User user = users.get(0);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-
         Iterator<Role> iterator = user.getRoles().iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(iterator.next().getName()));
         }
 
         return new org.springframework.security.core.userdetails
-                .User(Long.toString(user.getId()), password, grantedAuthorities);
+                .User(user.getTell(), user.getPassword(), grantedAuthorities);
     }
 }
