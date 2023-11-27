@@ -45,7 +45,9 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(authentication.getName()).build();
 
         Date now = new Date();
-        Date expireDate = new Date(now.getTime() + accessExpiration);
+        Date expireDate = new Date(now.getTime() + (accessExpiration*1000));
+
+        log.info("accessExpiration : " + accessExpiration);
 
         return Jwts.builder()
                 .claims(claims)
@@ -59,7 +61,9 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(authentication.getName()).build();
 
         Date now = new Date();
-        Date expireDate = new Date(now.getTime() + refreshExpiration);
+        Date expireDate = new Date(now.getTime() + (refreshExpiration*1000));
+
+        log.info("refreshExpiration : " + refreshExpiration);
 
         return Jwts.builder()
                 .claims(claims)
