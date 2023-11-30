@@ -1,5 +1,6 @@
 package com.sendbox.kiosk.security.config;
 
+import com.sendbox.kiosk.common.Role;
 import com.sendbox.kiosk.security.jwt.JwtTokenProvider;
 import com.sendbox.kiosk.security.jwt.config.JwtSecurityConfig;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/admin/**")).hasRole("ADMIN")
-                        .requestMatchers(new MvcRequestMatcher(introspector,"/mem/**")).hasRole("MEMBER")
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/admin/**")).hasAuthority(Role.ROLE_ADMIN.getName())
+                        .requestMatchers(new MvcRequestMatcher(introspector,"/mem/**")).hasAuthority(Role.ROLE_MEMBER.getName())
                         .anyRequest().permitAll());
 
         httpSecurity.exceptionHandling(httpSecurityExceptionHandlingConfigurer ->

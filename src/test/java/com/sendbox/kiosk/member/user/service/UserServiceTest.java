@@ -4,8 +4,6 @@ import com.sendbox.kiosk.common.Role;
 import com.sendbox.kiosk.member.user.domain.User;
 import com.sendbox.kiosk.member.user.domain.UserDto;
 import com.sendbox.kiosk.member.user.repository.UserRepository;
-import com.sendbox.kiosk.member.user.service.EncodeService;
-import com.sendbox.kiosk.member.user.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,7 +58,7 @@ class UserServiceTest {
         assertTrue(encodeService.isMatch(userPassword, user.getPassword()));
         assertEquals(userPin, user.getPin());
         assertEquals(0, user.getTotalPoint());
-        assertTrue(user.getRoles().contains(Role.ROLE_USER));
+        assertTrue(user.getRoles().contains(Role.ROLE_MEMBER));
     }
 //
 //    @DisplayName("이미 존재하는 핸드폰 번호가 존재할 때는 생성에 실패하여 NULL을 반환한다.")
