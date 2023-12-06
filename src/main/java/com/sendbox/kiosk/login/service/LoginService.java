@@ -1,5 +1,6 @@
 package com.sendbox.kiosk.login.service;
 
+import com.sendbox.kiosk.login.config.TokenTimeConfig;
 import com.sendbox.kiosk.login.domain.LoginRequestDto;
 import com.sendbox.kiosk.login.domain.Token;
 import com.sendbox.kiosk.login.domain.TokenDto;
@@ -51,11 +52,6 @@ public class LoginService {
                 .token(token)
                 .build();
 
-        UserToken saveUserToken = tokenRepository.save(userToken);
-
-        return TokenDto.builder()
-                .accessToken(saveUserToken.getToken().getAccessToken())
-                .refreshToken(saveUserToken.getToken().getRefreshToken())
-                .build();
+        return tokenRepository.save(userToken, TokenTimeConfig.refreshTokenExpiration);
     }
 }

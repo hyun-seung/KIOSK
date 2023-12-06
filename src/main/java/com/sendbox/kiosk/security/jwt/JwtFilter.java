@@ -4,9 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,16 +33,14 @@ public class JwtFilter extends OncePerRequestFilter {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             } else {
-                log.error("잘못된 토큰 3");
+                log.info("토큰이 없거나 이상한 경우");
             }
-//        } catch (RedisConnectionFailureException e) {
-//            SecurityContextHolder.clearContext();
-//            throw new BaseException(REDIS_ERROR);
+        } catch (RedisConnectionFailureException e) {
+            SecurityContextHolder.clearContext();
         } catch (Exception e) {
-            log.error("잘못된 토큰 2");
+            log.error("잘못된 토큰");
         }
 
-        log.info("실행");
         filterChain.doFilter(request, response);
     }
 }
