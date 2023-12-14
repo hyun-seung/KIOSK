@@ -3,6 +3,7 @@ package com.sendbox.kiosk.redis.repository;
 import com.sendbox.kiosk.login.domain.TokenDto;
 import com.sendbox.kiosk.redis.domain.UserToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,18 +13,40 @@ import java.util.concurrent.TimeUnit;
 public class UserTokenRepository {
 
     @Autowired
-    private RedisTemplate<String, UserToken> redisTemplate;
+    private final RedisTemplate<String, UserToken> redisTemplate;
 
-    private static final String USER_TOKEN_KEY = "UserToken";
+    private final HashOperations<String, String, String> hashOperations;
+
+    public UserTokenRepository(RedisTemplate<String, UserToken> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = redisTemplate.opsForHash();
+    }
+
+    public TokenDto findByTell(String tell) {
+        String refreshToken = "";
+
+        if (hashOperations.hasKey(tell, refreshToken)) {
+            refreshToken = hashOperations.get(tell, refreshToken);
+        } else {
+            // 예외 처리
+            refreshToken = "못 찾았어용..";
+        }
+
+        String accessToken = hashOperations.get(tell, refreshToken);
+        long expireInSeconds = redisTemplate.getExpire(tell);
+
+        return TokenDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .expireIn(expireInSeconds)
+                .build();
+    }
 
     public TokenDto save(UserToken userToken, long ttlInSeconds) {
-        redisTemplate.delete(USER_TOKEN_KEY);
-
-        redisTemplate.opsForHash().put(USER_TOKEN_KEY, userToken.getUserTell(), userToken);
+        redisTemplate.opsForHash().put(userToken.getUserTell(), userToken.getToken().getRefreshToken(), userToken.getToken().getAccessToken());
 
         boolean isSuccess = setTTL(userToken.getUserTell(), ttlInSeconds);
-
-        if (isSuccess == false) {
+        if (!isSuccess) {
             ttlInSeconds = -1;
         }
 
@@ -35,13 +58,6 @@ public class UserTokenRepository {
     }
 
     private boolean setTTL(String tell, long ttlInSeconds) {
-        String key = createKey(tell);
-        return redisTemplate.expire(USER_TOKEN_KEY, ttlInSeconds, TimeUnit.SECONDS);
-    }
-
-    private String createKey(String tell) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(USER_TOKEN_KEY).append(":").append(tell);
-        return sb.toString();
+        return redisTemplate.expire(tell, ttlInSeconds, TimeUnit.SECONDS);
     }
 }
